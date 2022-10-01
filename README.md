@@ -12,10 +12,10 @@ Jika Anda memerlukan informasi lebih lanjut, ikuti tautan ini:
 * [Blynk library](https://github.com/blynkkk/blynk-library)
 * [Kickstarter](https://www.kickstarter.com/projects/167134865/blynk-build-an-app-for-your-arduino-project-in-5-m/description)
 
-![Dashboard settings](https://github.com/blynkkk/blynk-server/blob/master/docs/overview/dash_settings.png)
-![Widgets Box](https://github.com/blynkkk/blynk-server/blob/master/docs/overview/widgets_box.png)
-![Dashboard](https://github.com/blynkkk/blynk-server/blob/master/docs/overview/dash.png)
-![Dashboard2](https://github.com/blynkkk/blynk-server/blob/master/docs/overview/dash2.png)
+![Dashboard settings](https://github.com/vahnzoel/server-local-blynk/blob/master/Screenshot_20221002-025126_Blynk.jpg)
+![Widgets Box](https://github.com/vahnzoel/server-local-blynk/blob/master/Screenshot_20221002-024749_Blynk.jpg)
+![Dashboard](https://github.com/vahnzoel/server-local-blynk/blob/master/Screenshot_20221002-024938_Blynk.jpg)
+![Dashboard2](https://github.com/vahnzoel/server-local-blynk/blob/master/Screenshot_20221002-024912_Blynk.jpg)
 
 # Content 
 
