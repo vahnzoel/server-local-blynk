@@ -1,16 +1,5 @@
 # Apa itu Blynk?
 Blynk adalah platform dengan aplikasi iOS dan Android untuk mengontrol Arduino, ESP8266, Raspberry Pi dan sejenisnya melalui Internet. Anda dapat dengan mudah membangun antarmuka grafis untuk semua proyek Anda hanya dengan menyeret dan menjatuhkan widget.
-Jika Anda memerlukan informasi lebih lanjut, ikuti tautan ini:
-* [Blynk site](https://www.blynk.io)
-* [Blynk docs](http://docs.blynk.cc)
-* [Blynk community](https://community.blynk.cc)
-* [Blynk Examples generator](https://examples.blynk.cc)
-* [Facebook](http://www.fb.com/blynkapp)
-* [Twitter](http://twitter.com/blynk_app)
-* [App Store](https://itunes.apple.com/us/app/blynk-control-arduino-raspberry/id808760481?ls=1&mt=8)
-* [Google Play](https://play.google.com/store/apps/details?id=cc.blynk)
-* [Blynk library](https://github.com/blynkkk/blynk-library)
-* [Kickstarter](https://www.kickstarter.com/projects/167134865/blynk-build-an-app-for-your-arduino-project-in-5-m/description)
 
 ![Dashboard settings](https://github.com/vahnzoel/server-local-blynk/blob/master/Screenshot_20221002-025126_Blynk.jpg)
 ![Widgets Box](https://github.com/vahnzoel/server-local-blynk/blob/master/Screenshot_20221002-024749_Blynk.jpg)
@@ -20,21 +9,21 @@ Jika Anda memerlukan informasi lebih lanjut, ikuti tautan ini:
 # Content 
 
 - [Download](#blynk-server)
-- [Requirements](#requirements)
-- [Quick Local Server setup](#quick-local-server-setup)
-- [Enabling mail on Local server](#enabling-mail-on-local-server)
-- [Quick local server setup on Raspberry PI](#quick-local-server-setup-on-raspberry-pi)
+- [Requirements](#persyaratan)
+- [Quick Local Server setup](#pengaturan-server-lokal-cepat)
+- [Enabling mail on Local server](#mengaktifkan-email-di-server-lokal)
+- [Quick local server setup on Raspberry PI](#pengaturan-server-lokal-cepat-pada-raspberry-pi)
 - [Docker container setup](#docker-container-setup)
-- [Enabling server auto restart on unix-like systems](#enabling-server-auto-restart-on-unix-like-systems)
-- [Enabling server auto restart on Windows](#enabling-server-auto-restart-on-windows)
-- [Update instruction for unix-like systems](#update-instruction-for-unix-like-systems)
-- [Update instruction for Windows](#update-instruction-for-windows)
-- [App and sketch changes for Local Server](#app-and-sketch-changes)
-- [Advanced local server setup](#advanced-local-server-setup)
+- [Enabling server auto restart on unix-like systems](#mengaktifkan-restart-otomatis-server-pada-sistem-seperti-unix)
+- [Enabling server auto restart on Windows](#mengaktifkan-restart-otomatis-server-pada-windows)
+- [Update instruction for unix-like systems](#perbarui-instruksi-untuk-sistem-seperti-unix)
+- [Update instruction for Windows](#perbarui-instruksi-untuk-windows)
+- [App and sketch changes for Local Server](#perbarui-aplikasi-dan-sketsa)
+- [Advanced local server setup](#penyiapan-server-lokal-tingkat-lanjut)
 - [Administration UI](#administration-ui)
 - [HTTP/S RESTful API](#https-restful)
 - [Enabling sms on local server](#enabling-sms-on-local-server)
-- [Enabling raw data storage](#enabling-raw-data-storage)
+- [Enabling raw data storage](#mengaktifkan-penyimpanan-raw-data)
 - [Automatic Let's Encrypt Certificates](#automatic-lets-encrypt-certificates-generation)
 - [Manual Let's Encrypt SSL/TLS Certificates](#manual-lets-encrypt-ssltls-certificates)
 - [Generate own SSL certificates](#generate-own-ssl-certificates)
@@ -47,11 +36,7 @@ Jika Anda memerlukan informasi lebih lanjut, ikuti tautan ini:
 ## Blynk server
 Blynk Server adalah server Java berbasis Open-Source [Netty] (https://github.com/netty/netty), yang bertanggung jawab untuk meneruskan pesan antara aplikasi Blynk dan berbagai papan mikrokontroler dan SBC (i.e. Arduino, Raspberry Pi, dll.).
 
-**Unduh build server terbaru [di sini](https://github.com/blynkkk/blynk-server/releases).**
-
-[![GitHub version](https://img.shields.io/github/release/blynkkk/blynk-server.svg)](https://github.com/blynkkk/blynk-server/releases/latest)
-[![GitHub download](https://img.shields.io/github/downloads/blynkkk/blynk-server/total.svg)](https://github.com/blynkkk/blynk-server/releases/latest)
-[ ![Build Status](https://travis-ci.org/blynkkk/blynk-server.svg?branch=master)](https://travis-ci.org/blynkkk/blynk-server)
+**Unduh build server terbaru [di sini](https://github.com/vahnzoel/server-local-blynk/blob/master/server-0.41.16-java8.jar).**
 
 ## Persyaratan
 - Java 8/11 required (OpenJDK, Oracle) 
@@ -119,7 +104,7 @@ Pergi [kesini](https://www.google.com/settings/security/lesssecureapps) dan lalu
 
 + Jalankan server secara default 'hardware port 8080' dan default 'application port 9443' (SSL port)
 
-        java -jar server-0.41.13-java8.jar -dataFolder /home/pi/Blynk
+        java -jar server-0.41.16-java8.jar -dataFolder /home/pi/Blynk
         
 Itu dia! 
 
