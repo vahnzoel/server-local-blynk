@@ -6,14 +6,12 @@ import cc.blynk.server.servers.application.MobileAndHttpsServer;
 import cc.blynk.server.servers.hardware.HardwareAndHttpAPIServer;
 import cc.blynk.server.servers.hardware.MQTTHardwareServer;
 import cc.blynk.utils.AppNameUtil;
-import cc.blynk.utils.FileLoaderUtil;
 import cc.blynk.utils.JarUtil;
 import cc.blynk.utils.LoggerUtil;
 import cc.blynk.utils.SHA256Util;
 import cc.blynk.utils.StringUtils;
 import cc.blynk.utils.properties.GCMProperties;
 import cc.blynk.utils.properties.MailProperties;
-import cc.blynk.utils.properties.Placeholders;
 import cc.blynk.utils.properties.ServerProperties;
 import cc.blynk.utils.properties.SmsProperties;
 import cc.blynk.utils.properties.TwitterProperties;
@@ -22,7 +20,6 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import java.io.File;
 import java.net.BindException;
 import java.security.Security;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -77,11 +74,13 @@ public final class ServerLauncher {
     }
 
     private static void setGlobalProperties(ServerProperties serverProperties) {
-        Map<String, String> globalProps = new HashMap<>(4);
-        globalProps.put("terminal.strings.pool.size", "25");
-        globalProps.put("initial.energy", "2000");
-        globalProps.put("table.rows.pool.size", "100");
-        globalProps.put("csv.export.data.points.max", "43200");
+        Map<String, String> globalProps = Map.of(
+                "terminal.strings.pool.size", "25",
+                "initial.energy", "2000",
+                "table.rows.pool.size", "100",
+                "csv.export.data.points.max", "43200",
+                "map.strings.pool.size", "25"
+        );
 
         for (var entry : globalProps.entrySet()) {
             String name = entry.getKey();
@@ -137,27 +136,7 @@ public final class ServerLauncher {
 
             String hash = SHA256Util.makeHash(pass, email);
             holder.userDao.add(email, hash, AppNameUtil.BLYNK, true);
-
-            String vendorEmail = props.vendorEmail;
-            if (vendorEmail != null) {
-                String subj = "Your private Blynk server for " + props.productName + " is up!";
-                String body = buildServerUpEmailBody(url, email, pass);
-                holder.blockingIOProcessor.messagingExecutor.execute(() -> {
-                    try {
-                        holder.mailWrapper.sendHtml(vendorEmail, subj, body);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-            }
         }
-    }
-
-    private static String buildServerUpEmailBody(String url, String email, String pass) {
-        String sb = "Your Admin url is " + url + "<br>"
-                + "Your Admin login email is <b>" + email + "</b><br>"
-                + "Your Admin password is <b>" + pass + "</b>";
-        return FileLoaderUtil.readNewServerUpTemplateAsString().replace(Placeholders.DYNAMIC_SECTION, sb);
     }
 
     private static boolean startServers(BaseServer[] servers) {

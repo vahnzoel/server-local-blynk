@@ -61,9 +61,13 @@ final class JobLauncher {
                 holder.props.getIntProperty("stats.print.worker.period"), MILLISECONDS);
 
         if (holder.sslContextHolder.runRenewalWorker()) {
-            scheduler.scheduleAtFixedRate(
-                    new CertificateRenewalWorker(holder.sslContextHolder), 1, 1, TimeUnit.DAYS
-            );
+            if (holder.props.isRenewalDisabled()) {
+                System.out.println("Certificate renewal disabled.");
+            } else {
+                scheduler.scheduleAtFixedRate(
+                        new CertificateRenewalWorker(holder.sslContextHolder), 1, 1, TimeUnit.DAYS
+                );
+            }
         }
         scheduler.scheduleAtFixedRate(LRUCache.LOGIN_TOKENS_CACHE::clear, 1, 1, HOURS);
         scheduler.scheduleAtFixedRate(holder.tokenManager::clearTemporaryTokens, 7, 1, DAYS);
@@ -76,7 +80,7 @@ final class JobLauncher {
         scheduler.scheduleAtFixedRate(reportingDataDiskCleaner, 1, 7, DAYS);
 
         ReportingTruncateWorker reportingTruncateWorker = new ReportingTruncateWorker(holder.reportingDiskDao,
-                holder.limits.storeMinuteRecordDays);
+                holder.limits.storeMinuteRecordDays, holder.limits.storeReportCSVDays);
 
         //once every week
         scheduler.scheduleAtFixedRate(reportingTruncateWorker, 1, 24 * 7, HOURS);

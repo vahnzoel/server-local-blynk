@@ -19,14 +19,14 @@
 
     <groupId>cc.blynk</groupId>
     <artifactId>blynk</artifactId>
-    <version>0.41.7-SNAPSHOT</version>
+    <version>0.41.16</version>
     <packaging>pom</packaging>
 
     <scm>
         <url>https://github.com/blynkkk/blynk-server.git</url>
         <connection>scm:git:ssh://git@github.com/blynkkk/blynk-server.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/blynkkk/blynk-server.git</developerConnection>
-        <tag>v0.41.2-SNAPSHOT</tag>
+        <tag>v0.41.16</tag>
     </scm>
 
     <developers>
@@ -157,27 +157,26 @@
         <maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
 
         <!-- dependencies -->
-        <netty.version>4.1.36.Final</netty.version>
-        <netty.boring.ssl.version>2.0.25.Final</netty.boring.ssl.version>
-        <log4j2.version>2.11.2</log4j2.version>
-        <jackson-databind.version>2.9.9</jackson-databind.version>
+        <netty.version>4.1.63.Final</netty.version>
+        <netty.boring.ssl.version>2.0.38.Final</netty.boring.ssl.version>
+        <log4j2.version>2.14.1</log4j2.version>
+        <jackson-databind.version>2.12.2</jackson-databind.version>
         <disruptor.version>3.4.2</disruptor.version>
-        <async-http-client.version>2.8.1</async-http-client.version>
-        <postgresql.version>42.2.5</postgresql.version>
-        <HikariCP.version>3.3.1</HikariCP.version>
+        <async-http-client.version>2.12.3</async-http-client.version>
+        <postgresql.version>42.2.16</postgresql.version>
+        <HikariCP.version>3.4.1</HikariCP.version>
         <qrgen.version>2.2.0</qrgen.version>
-        <bcpg-jdk15on.version>1.61</bcpg-jdk15on.version>
-        <acme4j-client.version>2.7</acme4j-client.version>
+        <bcpg-jdk15on.version>1.66</bcpg-jdk15on.version>
+        <acme4j-client.version>2.11</acme4j-client.version>
         <javax.mail.version>1.6.2</javax.mail.version>
         <javax.activation.version>1.2.0</javax.activation.version>
 
         <!-- test dependencies -->
         <httpclient.version>4.5.2</httpclient.version>
-        <commons-lang3.version>3.4</commons-lang3.version>
+        <commons-lang3.version>3.7</commons-lang3.version>
         <junit.version>4.12</junit.version>
         <mockito-core.version>2.18.3</mockito-core.version>
         <commons-io.version>2.5</commons-io.version>
-        <commons-lang.version>3.7</commons-lang.version>
         <jmh-core.version>1.19</jmh-core.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
