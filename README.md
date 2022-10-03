@@ -1,29 +1,30 @@
-# Apa itu Blynk?
-Blynk adalah platform dengan aplikasi iOS dan Android untuk mengontrol Arduino, ESP8266, Raspberry Pi dan sejenisnya melalui Internet. Anda dapat dengan mudah membangun antarmuka grafis untuk semua proyek Anda hanya dengan menyeret dan menjatuhkan widget.
+# What is Blynk?
+Blynk is a platform with iOS and Android apps to control Arduino, ESP8266, Raspberry Pi and the likes over the Internet.  
+You can easily build graphic interfaces for all your projects by simply dragging and dropping widgets.
 
-![Dashboard settings](https://github.com/vahnzoel/server-local-blynk/blob/master/Screenshot_20221002-025126_Blynk.jpg)
-![Widgets Box](https://github.com/vahnzoel/server-local-blynk/blob/master/Screenshot_20221002-024749_Blynk.jpg)
-![Dashboard](https://github.com/vahnzoel/server-local-blynk/blob/master/Screenshot_20221002-024938_Blynk.jpg)
-![Dashboard2](https://github.com/vahnzoel/server-local-blynk/blob/master/Screenshot_20221002-024912_Blynk.jpg)
+![Dashboard settings](https://github.com/vahnzoel/server-local-blynk/blob/master/docs/overview/dash_settings.png)
+![Widgets Box](https://github.com/vahnzoel/server-local-blynk/blob/master/docs/overview/widgets_box.png)
+![Dashboard](https://github.com/vahnzoel/server-local-blynk/blob/master/docs/overview/dash.png)
+![Dashboard2](https://github.com/vahnzoel/server-local-blynk/blob/master/docs/overview/dash2.png)
 
 # Content 
 
 - [Download](#blynk-server)
-- [Requirements](#persyaratan)
-- [Quick Local Server setup](#pengaturan-server-lokal-cepat)
-- [Enabling mail on Local server](#mengaktifkan-email-di-server-lokal)
-- [Quick local server setup on Raspberry PI](#pengaturan-server-lokal-cepat-pada-raspberry-pi)
+- [Requirements](#requirements)
+- [Quick Local Server setup](#quick-local-server-setup)
+- [Enabling mail on Local server](#enabling-mail-on-local-server)
+- [Quick local server setup on Raspberry PI](#quick-local-server-setup-on-raspberry-pi)
 - [Docker container setup](#docker-container-setup)
-- [Enabling server auto restart on unix-like systems](#mengaktifkan-restart-otomatis-server-pada-sistem-seperti-unix)
-- [Enabling server auto restart on Windows](#mengaktifkan-restart-otomatis-server-pada-windows)
-- [Update instruction for unix-like systems](#perbarui-instruksi-untuk-sistem-seperti-unix)
-- [Update instruction for Windows](#perbarui-instruksi-untuk-windows)
-- [App and sketch changes for Local Server](#perbarui-aplikasi-dan-sketsa)
-- [Advanced local server setup](#penyiapan-server-lokal-tingkat-lanjut)
+- [Enabling server auto restart on unix-like systems](#enabling-server-auto-restart-on-unix-like-systems)
+- [Enabling server auto restart on Windows](#enabling-server-auto-restart-on-windows)
+- [Update instruction for unix-like systems](#update-instruction-for-unix-like-systems)
+- [Update instruction for Windows](#update-instruction-for-windows)
+- [App and sketch changes for Local Server](#app-and-sketch-changes)
+- [Advanced local server setup](#advanced-local-server-setup)
 - [Administration UI](#administration-ui)
 - [HTTP/S RESTful API](#https-restful)
 - [Enabling sms on local server](#enabling-sms-on-local-server)
-- [Enabling raw data storage](#mengaktifkan-penyimpanan-raw-data)
+- [Enabling raw data storage](#enabling-raw-data-storage)
 - [Automatic Let's Encrypt Certificates](#automatic-lets-encrypt-certificates-generation)
 - [Manual Let's Encrypt SSL/TLS Certificates](#manual-lets-encrypt-ssltls-certificates)
 - [Generate own SSL certificates](#generate-own-ssl-certificates)
@@ -31,45 +32,50 @@ Blynk adalah platform dengan aplikasi iOS dan Android untuk mengontrol Arduino, 
 - [How Blynk Works?](#how-blynk-works)
 - [Blynk Protocol](#blynk-protocol)
 
-# MULAI
+# GETTING STARTED
 
 ## Blynk server
-Blynk Server adalah server Java berbasis Open-Source [Netty] (https://github.com/netty/netty), yang bertanggung jawab untuk meneruskan pesan antara aplikasi Blynk dan berbagai papan mikrokontroler dan SBC (i.e. Arduino, Raspberry Pi, dll.).
+Blynk Server is an Open-Source [Netty](https://github.com/netty/netty) based Java server, responsible for forwarding 
+messages between Blynk mobile application and various microcontroller boards and SBCs (i.e. Arduino, Raspberry Pi. etc).
 
-**Unduh build server terbaru [di sini](https://github.com/vahnzoel/server-local-blynk/blob/master/server-0.41.16-java8.jar).**
+**Download latest server build [here](https://github.com/vahnzoel/server-local-blynk/releases).**
 
-## Persyaratan
+[![GitHub version](https://img.shields.io/github/release/blynkkk/blynk-server.svg)](https://github.com/vahnzoel/server-local-blynk/releases/latest)
+[![GitHub download](https://img.shields.io/github/downloads/vahnzoel/server-local-blynk/total.svg)](https://github.com/vahnzoel/server-local-blynk/releases/latest)
+[ ![Build Status](https://travis-ci.org/blynkkk/blynk-server.svg?branch=master)](https://travis-ci.org/blynkkk/blynk-server)
+
+## Requirements
 - Java 8/11 required (OpenJDK, Oracle) 
-- OS apa pun yang dapat menjalankan java 
-- Setidaknya 30 MB RAM (bisa lebih sedikit dengan penyetelan)
-- Buka ports 9443 (untuk aplikasi dan hardware dengan ssl), 8080 (untuk hardware tanpa ssl)
+- Any OS that can run java 
+- At least 30 MB of RAM (could be less with tuning)
+- Open ports 9443 (for app and hardware with ssl), 8080 (for hardware without ssl)
 
-[Instruksi instalasi java pada Ubuntu](#install-java-for-ubuntu).
+[Ubuntu java installation instruction](#install-java-for-ubuntu).
 
-Untuk Windows unduh Java [di sini](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html) dan instal. 
+For Windows download Java [here](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html) and install. 
 
-## Pengaturan server lokal cepat
+## Quick local server setup
 
-+ Pastikan Anda menggunakan Java 11
++ Make sure you are using Java 11
 
         java -version
         Output: java version "11"
 
-+ Jalankan server secara default 'hardware port 8080' dan default 'application port 9443' (SSL port)
++ Run the server on default 'hardware port 8080' and default 'application port 9443' (SSL port)
 
-        java -jar server-0.41.13.jar -dataFolder /path
+        java -jar server-0.41.6.jar -dataFolder /path
         
-Itu dia! 
+That's it! 
 
-**NOTE: ```/path``` harus ada jalur nyata ke folder tempat Anda ingin menyimpan semua data Anda.**
+**NOTE: ```/path``` should be real existing path to folder where you want to store all your data.**
 
-+ Sebagai output, Anda akan melihat sesuatu seperti itu:
++ As an output you should see something like that:
 
         Blynk Server successfully started.
         All server output is stored in current folder in 'logs/blynk.log' file.
         
-### Mengaktifkan email di server lokal
-Untuk mengaktifkan pemberitahuan email di server lokal Anda harus memberikan kredensial email Anda sendiri. Buat file `mail.properties` dalam folder yang sama di mana `server.jar` adalah.
+### Enabling mail on Local server
+To enable mail notifications on Local server you need to provide your own mail credentials. Create file `mail.properties` within same folder where `server.jar` is.
 Mail properties:
 
         mail.smtp.auth=true
@@ -79,205 +85,199 @@ Mail properties:
         mail.smtp.username=YOUR_EMAIL_HERE
         mail.smtp.password=YOUR_EMAIL_PASS_HERE
         
-Temukan Contoh [di sini](https://github.com/blynkkk/blynk-server/blob/master/server/notifications/email/src/main/resources/mail.properties).
+Find example [here](https://github.com/vahnzoel/server-local-blynk/blob/master/server/notifications/email/src/main/resources/mail.properties).
 
-PERINGATAN: hanya akun gmail yang diizinkan.
+WARNING : only gmail accounts are allowed.
 
-NOTE : Anda harus menyiapkan Gmail untuk memungkinkan aplikasi yang kurang aman.
-Pergi [kesini](https://www.google.com/settings/security/lesssecureapps) dan lalu klik "Allow less secure apps".
+NOTE : you'll need to setup Gmail to allow less secured applications.
+Go [here](https://www.google.com/settings/security/lesssecureapps) and then click "Allow less secure apps".
 
-## Pengaturan server lokal cepat pada Raspberry PI
+## Quick local server setup on Raspberry PI
 
-+ Login ke Raspberry Pi via ssh;
-+ Instal java 8: 
++ Login to Raspberry Pi via ssh;
++ Install java 8: 
         
-        sudo apt install openjdk-8-jdk openjdk-8-jre
+        sudo apt-get install oracle-java8-jdk
         
-+ Pastikan Anda menggunakan Java 8
++ Make sure you are using Java 8
 
         java -version
         Output: java version "1.8"
         
-+ Unduh file jar Blynk server (atau copy secara manual ke Raspberry Pi melalui ssh dan scp command): 
++ Download Blynk server jar file (or manually copy it to Raspberry Pi via ssh and scp command): 
    
-        wget "https://github.com/vahnzoel/server-local-blynk/blob/master/server-0.41.16-java8.jar"
+        wget "https://github.com/vahnzoel/server-local-blynk/releases/download/v0.41.6/server-0.41.6-java8.jar"
 
-+ Jalankan server secara default 'hardware port 8080' dan default 'application port 9443' (SSL port)
++ Run the server on default 'hardware port 8080' and default 'application port 9443' (SSL port)
 
-        java -jar server-0.41.16-java8.jar -dataFolder /home/pi/Blynk
+        java -jar server-0.41.6-java8.jar -dataFolder /home/pi/Blynk
         
-Itu dia! 
+That's it! 
 
-+ Sebagai output, Anda akan melihat sesuatu seperti itu:
++ As output you will see something like that:
 
         Blynk Server successfully started.
         All server output is stored in current folder in 'logs/blynk.log' file.
 
 ## Docker container setup
 
-### Peluncuran cepat
+### Quick Launch
 
-+ Instal [Docker](https://docs.docker.com/install/)
-+ Jalankan Docker container
++ Install [Docker](https://docs.docker.com/install/)
++ Run Docker container
 
         docker run -p 8080:8080 -p 9443:9443 mpherg/blynk-server
 
-### Peluncuran cepat pada Raspberry Pi
+### Full customisation
 
-+ Instal [Docker](https://docs.docker.com/engine/install/debian/)
-+ Jalankan Docker container
-
-        docker run -p 8080:8080 -p 9443:9443 linuxkonsult/rasbian-blynk
-
-### Kustomisasi penuh
-
-+ Cek [README](server/Docker) di docker folder
++ Check [README](server/Docker) in docker folder
 
 
 
 
-## Mengaktifkan restart otomatis server pada sistem seperti unix
+## Enabling server auto restart on unix-like systems
         
-+ Untuk mengaktifkan auto restart pada server temukan /etc/rc.local file dan tambahkan:
++ To enable server auto restart find /etc/rc.local file and add:
 
-        java -jar /home/pi/server-0.41.13-java8.jar -dataFolder /home/pi/Blynk &
+        java -jar /home/pi/server-0.41.6-java8.jar -dataFolder /home/pi/Blynk &
         
-+ Atau jika cara di atas tidak berhasil, jalankan 
++ Or if the approach above doesn't work, execute 
        
         crontab -e
 
-tambahkan baris berikut
+add the following line
 
-        @reboot java -jar /home/pi/server-0.41.13-java8.jar -dataFolder /home/pi/Blynk &
+        @reboot java -jar /home/pi/server-0.41.6-java8.jar -dataFolder /home/pi/Blynk &
         
-save dan exit.
+save and exit.
 
-## Mengaktifkan restart otomatis server pada Windows
+## Enabling server auto restart on Windows
 
-+ Buat bat file:
++ Create bat file:
 
         start-blynk.bat
 
-+ Masukkan satu baris: 
++ Put in it one line: 
 
-        java -jar server-0.41.13.jar -dataFolder /home/pi/Blynk
+        java -jar server-0.41.6.jar -dataFolder /home/pi/Blynk
         
-+ Masukkan file bat ke folder startup windows
++ Put bat file to windows startup folder
 
-Anda juga dapat menggunakan [ini](https://github.com/blynkkk/blynk-server/tree/master/scripts/win) script to run server.
+You can also use [this](https://github.com/vahnzoel/server-local-blynk/tree/master/scripts/win) script to run server.
 
-## Perbarui instruksi untuk sistem seperti unix
+## Update instruction for unix-like systems
 
-**PENTING**
-Server harus selalu diperbarui sebelum Anda memperbarui Aplikasi Blynk. Untuk memperbarui server Anda ke versi yang lebih baru, Anda harus mematikan proses lama dan memulai yang baru.
+**IMPORTANT**
+Server should be always updated before you update Blynk App. To update your server to a newer version you would need to kill old process and start a new one.
 
-+ Temukan id proses Blynk server
++ Find process id of Blynk server
 
         ps -aux | grep java
         
-+ Anda harus melihat sesuatu seperti itu
++ You should see something like that
  
-        username   10539  1.0 12.1 3325808 428948 pts/76 Sl   Jan22   9:11 java -jar server-0.41.13.jar   
+        username   10539  1.0 12.1 3325808 428948 pts/76 Sl   Jan22   9:11 java -jar server-0.41.6.jar   
         
-+ Kill proses lama
++ Kill the old process
 
         kill 10539
         
-10539 - blynk proses server id dari output perintah di atas.
+10539 - blynk server process id from command output above.
  
-+ Mulai server baru [seperti biasa](#quick-local-server-setup)
++ Start new server [as usual](#quick-local-server-setup)
 
-Setelah langkah ini, Anda dapat memperbarui aplikasi Blynk. Downgrade versi server tidak didukung. 
+After this steps you can update Blynk app. Server version downgrade is not supported. 
 
-**PERINGATAN!**
-Tolong ** jangan ** kembalikan server Anda ke versi yang lebih rendah. Anda dapat kehilangan semua data Anda.
+**WARNING!**
+Please **do not** revert your server to lower versions. You may loose all of your data.
 
-## Perbarui instruksi untuk Windows
+## Update instruction for Windows
 
-+ Buka Task Manager;
++ Open Task Manager;
 
-+ Temukan Java process;
++ Find Java process;
 
-+ Hentikan process;
++ Stop process;
 
-+ Mulai server baru [seperti biasa](#quick-local-server-setup)
++ Start new server [as usual](#quick-local-server-setup)
                 
-## Perubahan aplikasi dan sketsa
+## App and sketch changes
 
-+ Tentukan jalur server khusus di aplikasi Anda
++ Specify custom server path in your application
 
-![Custom server icon](https://github.com/blynkkk/blynk-server/blob/master/docs/login.png)
-![Server properties menu](https://github.com/blynkkk/blynk-server/blob/master/docs/custom.png)
+![Custom server icon](https://github.com/vahnzoel/server-local-blynk/blob/master/docs/login.png)
+![Server properties menu](https://github.com/vahnzoel/server-local-blynk/blob/master/docs/custom.png)
 
-+ Ubah sketsa ethernet Anda dari
++ Change your ethernet sketch from
 
     ```
     Blynk.begin(auth);
     ```
     
-    menjadi
+    to
     
     ```
     Blynk.begin(auth, "your_host", 8080);
     ```
     
-    atau menjadi
+    or to
     
     ```
     Blynk.begin(auth, IPAddress(xxx,xxx,xxx,xxx), 8080);
     ```
         
-+ Ubah sketsa WIFI Anda dari
++ Change your WIFI sketch from
         
     ```
     Blynk.begin(auth, SSID, pass));
     ```
    
-    menjadi
+    to
     
     ```
     Blynk.begin(auth, SSID, pass, "your_host", 8080);
     ```
     
-    atau menjadi
+    or to
     
     ```
     Blynk.begin(auth, SSID, pass, IPAddress(XXX,XXX,XXX,XXX), 8080);
     ```
         
-+ Ubah javascript rasp PI Anda dari
++ Change your rasp PI javascript from
 
     ```
     var blynk = new Blynk.Blynk(AUTH, options = {connector : new Blynk.TcpClient()});
     ```
     
-    menjadi
+    to
     
     ```
     var blynk = new Blynk.Blynk(AUTH, options= {addr:"xxx.xxx.xxx.xxx", port:8080});
     ```
         
-+ atau dalam kasus USB ketika menjalankan blynk-ser.sh, berikan opsi '-s' dengan alamat server lokal Anda
++ or in case of USB when running blynk-ser.sh provide '-s' option with address of your local server
 
         ./blynk-ser.sh -s you_host_or_IP
         
         
-**PENTING** 
-Blynk terus dikembangkan. Aplikasi dan server seluler sering diperbarui. Untuk menghindari masalah selama pembaruan, matikan pembaruan otomatis untuk aplikasi Blynk, atau perbarui server lokal dan aplikasi blynk secara bersamaan untuk menghindari kemungkinan masalah migrasi.
+**IMPORTANT** 
+Blynk is being constantly developed. Mobile apps and server are updated often. To avoid problems during updates either turn off auto-update for Blynk app, or update both local server and blynk app at same time to avoid possible migration issues.
 
-**PENTING**
-Server lokal Blynk berbeda dari server Blynk Cloud. Mereka tidak berhubungan sama sekali. Anda harus membuat akun baru saat menggunakan server lokal Blynk.
+**IMPORTANT** 
+Blynk local server is different from  Blynk Cloud server. They are not related at all. You have to create new account when using Blynk local server.
 
-## Penyiapan server lokal tingkat lanjut
-Untuk lebih fleksibel Anda dapat memperluas server dengan lebih banyak opsi dengan membuat file ```server.properties``` dalam folder yang sama dengan ```server.jar```. 
-Contoh dapat ditemukan [di sini](https://github.com/blynkkk/blynk-server/blob/master/server/core/src/main/resources/server.properties).
-Anda juga bisa menentukan jalur apa saja ke ```server.properties``` file melalui argumen command line ```-serverConfig```. Kamu bisa lakukan hal yang sama dengan ```mail.properties``` melalui ```-mailConfig``` dan ```sms.properties``` melalui ```-smsConfig```.
+## Advanced local server setup
+For more flexibility you can extend server with more options by creating ```server.properties``` file in same folder as ```server.jar```. 
+Example could be found [here](https://github.com/vahnzoel/server-local-blynk/blob/master/server/core/src/main/resources/server.properties).
+You could also specify any path to ```server.properties``` file via command line argument ```-serverConfig```. You can 
+do the same with ```mail.properties``` via ```-mailConfig``` and ```sms.properties``` via ```-smsConfig```.
  
-Untuk contoh:
+For example:
 
-    java -jar server-0.41.13-java8.jar -dataFolder /home/pi/Blynk -serverConfig /home/pi/someFolder/server.properties
+    java -jar server-0.41.6-java8.jar -dataFolder /home/pi/Blynk -serverConfig /home/pi/someFolder/server.properties
 
-Opsi server yang tersedia:
+Available server options:
 
 + Blynk app, https, web sockets, admin port
         
@@ -289,7 +289,7 @@ Opsi server yang tersedia:
         http.port=8080
         
         
-+ Untuk kesederhanaan Blynk sudah menyediakan server jar dengan sertifikat SSL bawaan, jadi Anda memiliki server yang berfungsi di luar kotak melalui soket SSL / TLS. Tetapi karena sertifikat dan kunci privatnya ada di publik, ini sama sekali tidak aman. Jadi untuk memperbaikinya Anda perlu memberikan sertifikat sendiri. Dan ubah properti di bawah ini dengan jalur ke sertifikat Anda. dan kunci pribadi dan kata sandi itu. Lihat cara membuat sertifikat yang ditandatangani sendiri [di sini](#generate-ssl-certificates)
++ For simplicity Blynk already provides server jar with built in SSL certificates, so you have working server out of the box via SSL/TLS sockets. But as certificate and it's private key are in public this is totally not secure. So in order to fix that you need to provide your own certificates. And change below properties with path to your cert. and private key and it's password. See how to generate self-signed certificates [here](#generate-ssl-certificates)
 
         #points to cert and key that placed in same folder as running jar.
         
@@ -298,139 +298,141 @@ Opsi server yang tersedia:
         server.ssl.key.pass=pupkin123
         
         
-+ Folder profil pengguna. Folder tempat semua profil pengguna akan disimpan. Secara default System.getProperty ("java.io.tmpdir") / blynk digunakan. Akan dibuat jika tidak ada
++ User profiles folder. Folder in which all users profiles will be stored. By default System.getProperty("java.io.tmpdir")/blynk used. Will be created if not exists
 
         data.folder=/tmp/blynk
         
 
-+ Folder untuk semua log aplikasi. Akan dibuat jika tidak ada. "." dir dari mana Anda menjalankan skrip.
++ Folder for all application logs. Will be created if it doesn't exist. "." is dir from which you are running script.
 
         logs.folder=./logs
         
 
-+ Tingkat debug debug. Nilai yang mungkin: trace | debug | info | error. Menentukan seberapa akurat pencatatan. Dari kiri ke kanan -> maksimum logging ke minimum
++ Log debug level. Possible values: trace|debug|info|error. Defines how precise logging will be. From left to right -> maximum logging to minimum
 
         log.level=trace
         
 
-+ Jumlah maksimum dasbor pengguna yang diizinkan.
++ Maximum allowed number of user dashboards.
 
         user.dashboard.max.limit=100
         
 
-+ 100 Req / detik batas tarif per pengguna. Anda juga mungkin ingin memperpanjang batas ini pada [sisi hardware](https://github.com/blynkkk/blynk-library/blob/f4e132652906d63d683abeed89f5d6ebe369e37a/Blynk/BlynkConfig.h#L42).
++ 100 Req/sec rate limit per user. You also may want to extend this limit on [hardware side](https://github.com/blynkkk/blynk-library/blob/f4e132652906d63d683abeed89f5d6ebe369e37a/Blynk/BlynkConfig.h#L42).
 
         user.message.quota.limit=100
         
 
-+ pengaturan ini menentukan seberapa sering Anda dapat mengirim email / tweet / push atau pemberitahuan lainnya. Ditentukan dalam hitungan detik
++ this setting defines how often you can send mail/tweet/push or any other notification. Specified in seconds
         
         notifications.frequency.user.quota.limit=60
         
 
-+ Ukuran profil pengguna maksimum yang diizinkan. Di Kb.
++ Maximum allowed user profile size. In Kb's.
 
         user.profile.max.size=128
         
         
-+ Jumlah string yang akan disimpan di widget terminal (data riwayat terminal)
++ Number of strings to store in terminal widget (terminal history data)
 
         terminal.strings.pool.size=25
         
 
-+ Jumlah maksimum antrian pemberitahuan yang dibolehkan. Antrian bertanggung jawab untuk memproses email, push, pengiriman twit. Karena masalah kinerja - antrian tersebut diproses dalam utas terpisah, ini diperlukan karena sifat pemblokiran semua operasi di atas. Biasanya batas tidak boleh tercapai
++ Maximum allowed number of notification queue. Queue responsible for processing email, pushes, twits sending. Because of performance issue - those queue is processed in separate thread, this is required due to blocking nature of all above operations. Usually limit shouldn't be reached
         
         notifications.queue.limit=5000
         
         
-+ Jumlah utas untuk melakukan operasi pemblokiran - push, twits, email, permintaan db. Dianjurkan untuk mempertahankan nilai ini rendah kecuali Anda harus melakukan banyak operasi pemblokiran.
++ Number of threads for performing blocking operations - push, twits, emails, db queries. Recommended to hold this value low unless you have to perform a lot of blocking operations.
 
         blocking.processor.thread.pool.limit=6
         
 
-+ Periode untuk membuang semua DB pengguna ke disk. Dalam milis
++ Period for flushing all user DB to disk. In millis
 
         profile.save.worker.period=60000
 
-+ Menentukan periode waktu maksimum saat soket perangkat keras tidak dapat digunakan. Setelah itu soket akan ditutup karena tidak aktif. Dalam hitungan detik. Biarkan kosong untuk batas waktu tak terbatas
++ Specifies maximum period of time when hardware socket could be idle. After which socket will be closed due to non activity. In seconds. Leave it empty for infinity timeout
 
         hard.socket.idle.timeout=15
         
-+ Paling diperlukan untuk pengaturan server lokal jika pengguna ingin mencatat data mentah dalam format CSV. Lihat [data mentah] (#raw-data-storage) bagian untuk info lebih lanjut.
++ Mostly required for local servers setup in case user want to log raw data in CSV format. See [raw data] (#raw-data-storage) section for more info.
         
         enable.raw.data.store=true
         
-+ Url untuk membuka halaman admin. Harus dimulai dari "/". Untuk jalur "/ admin" akan terlihat seperti itu "https://127.0.0.1:9443/admin". 
++ Url for opening admin page. Must start from "/". For "/admin" url path will look like that "https://127.0.0.1:9443/admin". 
 
         admin.rootPath=/admin
         
-+ Daftar IP administrator yang dipisahkan koma. Izinkan akses ke UI admin hanya untuk IP tersebut. Anda dapat mengaturnya untuk 0.0.0.0/0 untuk memungkinkan akses untuk semua. Anda dapat menggunakan notasi CIDR. Misalnya, 192.168.0.53/24.
++ Comma separated list of administrator IPs. Allow access to admin UI only for those IPs. You may set it for 0.0.0.0/0 to allow access for all. You may use CIDR notation. For instance, 192.168.0.53/24.
         
         allowed.administrator.ips=0.0.0.0/0
         
-+ Nama dan kata sandi admin default. Akan dibuat pada awal server awal
++ Default admin name and password. Will be created on initial server start
         
         admin.email=admin@blynk.cc
         admin.pass=admin
 
-+ Host untuk mengatur ulang pengalihan kata sandi dan pembuatan sertifikat. Secara default IP server saat ini diambil dari antarmuka jaringan "eth". Dapat diganti dengan nama host yang lebih ramah. Disarankan untuk mengganti properti ini dengan IP server Anda untuk menghindari kemungkinan masalah penyelesaian host.
++ Host for reset password redirect and certificate generation. By default current server IP is taken from "eth" network interface. Could be replaced with more friendly hostname. It is recommended to override this property with your server IP to avoid possible problems of host resolving.
         
         server.host=blynk-cloud.com
         
-+ Email yang digunakan untuk pendaftaran sertifikat, bisa dihilangkan jika Anda sudah menentukannya di mail.properties.
++ Email used for certificate registration, could be omitted in case you already specified it in mail.properties.
         
         contact.email=pupkin@gmail.com
         
 ## Administration UI
 
-Server Blynk menyediakan panel administrasi tempat Anda dapat memonitor server Anda. Itu dapat diakses di URL ini:
+Blynk server provides administration panel where you can monitor your server. It is accessible at this URL:
 
         https://your_ip:9443/admin
         
-![Administration UI](https://github.com/blynkkk/blynk-server/blob/master/docs/admin_panel.png)
+![Administration UI](https://github.com/vahnzoel/server-local-blynk/blob/master/docs/admin_panel.png)
               
-**PERINGATAN**
-Silakan ubah kata sandi dan nama admin default tepat setelah login ke halaman admin. **INI ADALAH UKURAN KEAMANAN**.
+**WARNING**
+Please change default admin password and name right after login to admin page. **THIS IS SECURITY MEASURE**.
         
-**PERINGATAN**
-```allowed.administrator.ips``` default memungkinkan akses untuk semua orang. Dengan kata lain,
-halaman administrasi tersedia dari komputer lain. Harap batasi akses ke sana melalui properti ```allowed.administrator.ips```.
+**WARNING**
+Default ```allowed.administrator.ips``` setting allows access for everyone. In other words, 
+administration page available from any other computer. Please restrict access to it via property ```allowed.administrator.ips```.
 
-### Matikan peringatan https chrome di localhost
+### Turn off chrome https warning on localhost
 
-- Paste di chrome 
+- Paste in chrome 
 
         chrome://flags/#allow-insecure-localhost
 
-- Anda akan melihat teks yang disoroti mengatakan: "Allow invalid certificates for resources loaded from localhost". Klik enable.
+- You should see highlighted text saying: "Allow invalid certificates for resources loaded from localhost". Click enable.
         
 ## HTTP/S RESTful
-Blynk HTTP / S RESTful API memungkinkan untuk dengan mudah membaca dan menulis nilai ke / dari Pin di aplikasi dan Perangkat Keras Blynk. Deskripsi Http API dapat ditemukan [di sini](http://docs.blynkapi.apiary.io).
+Blynk HTTP/S RESTful API allows to easily read and write values to/from Pins in Blynk apps and Hardware. 
+Http API description could be found [here](http://docs.blynkapi.apiary.io).
 
-### Mengaktifkan sms di server lokal
-Untuk mengaktifkan notifikasi SMS pada Server Lokal Anda perlu memberikan kredensial untuk gateway SMS (saat ini server Blynk hanya mendukung 1 penyedia - [Nexmo](https://www.nexmo.com/). Anda perlu membuat file ```sms.properties``` 
-dalam folder yang sama dengan server.jar.
+### Enabling sms on local server
+To enable SMS notifications on Local Server you need to provide credentials for SMS gateway (currently Blynk server
+supports only 1 provider - [Nexmo](https://www.nexmo.com/). You need to create file ```sms.properties``` 
+within same folder where server.jar is.
 
         nexmo.api.key=
         nexmo.api.secret=
         
-Dan isi properti di atas dengan kredensial yang akan Anda dapatkan dari Nexmo. (Akun -> Pengaturan -> Pengaturan API).
-Anda juga dapat mengirim SMS melalui email jika penyedia seluler Anda mendukungnya. Lihat [diskusi](http://community.blynk.cc/t/sms-notification-for-important-alert/2542) untuk lebih jelasnya.
+And fill in the above properties with the credentials you'll get from Nexmo. (Account -> Settings -> API settings).
+You can also send SMS over email if your cell provider supports that. See [discussion](http://community.blynk.cc/t/sms-notification-for-important-alert/2542) for more details.
  
 
-## Mengaktifkan penyimpanan raw data
-Secara default, penyimpanan raw data dinonaktifkan (karena terlalu banyak menghabiskan ruang disk).
-Saat Anda mengaktifkannya, setiap perintah ```Blynk.virtualWrite``` akan disimpan ke DB.
-Anda perlu menginstal Database PostgreSQL (**versi minimum yang diwajibkan adalah 9,5**) untuk mengaktifkan fungsi ini:
+## Enabling raw data storage
+By default raw data storage is disabled (as it consumes disk space a lot). 
+When you enable it, every ```Blynk.virtualWrite``` command will be saved to DB.
+You will need to install PostgreSQL Database (**minimum required version is 9.5**) to enable this functionality:
 
-#### 1. Mengaktifkan raw data di server
+#### 1. Enabling raw data on server
 
 Enable raw data in ```server.properties``` : 
 
         enable.db=true
         enable.raw.db.data.store=true
 
-#### 2. Instal PostgreSQL. Opsi A
+#### 2. Install PostgreSQL. Option A
 
         sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" >> /etc/apt/sources.list.d/pgdg.list'
         wget -q https://www.postgresql.org/media/keys/ACCC4CF8.asc -O - | sudo apt-key add -
@@ -438,41 +440,41 @@ Enable raw data in ```server.properties``` :
         sudo apt-get update
         sudo apt-get install postgresql postgresql-contrib
         
-#### 2. Instal PostgreSQL.  Opsi B 
+#### 2. Install PostgreSQL.  Option B 
 
         sudo apt-get update
         apt-get --no-install-recommends install postgresql-9.6 postgresql-contrib-9.6
 
-#### 3. Unduh script Blynk DB
+#### 3. Download Blynk DB script
 
-        wget https://raw.githubusercontent.com/blynkkk/blynk-server/master/server/core/src/main/resources/create_schema.sql
-        wget https://raw.githubusercontent.com/blynkkk/blynk-server/master/server/core/src/main/resources/reporting_schema.sql
+        wget https://raw.githubusercontent.com/vahnzoel/server-local-blynk/master/server/core/src/main/resources/create_schema.sql
+        wget https://raw.githubusercontent.com/vahnzoel/server-local-blynk/master/server/core/src/main/resources/reporting_schema.sql
 
-#### 4. Pindahkan create_schema.sql dan reporting_schema.sql ke temp folder (untuk menghindari masalah izin)
+#### 4. Move create_schema.sql and reporting_schema.sql to temp folder (to avoid permission problems)
 
         mv create_schema.sql /tmp
         mv reporting_schema.sql /tmp
         
-Hasil:  
+Result:  
 
         /tmp/create_schema.sql
         /tmp/reporting_schema.sql
         
-Salin ke clipboard dari konsol Anda.
+Copy it to clipboard from your console.
 
-#### 5. Connect ke PostgreSQL
+#### 5. Connect to PostgreSQL
 
         sudo su - postgres
         psql
 
-#### 6. Buat Blynk DB and Reporting DB, test user dan tables
+#### 6. Create Blynk DB and Reporting DB, test user and tables
 
         \i /tmp/create_schema.sql
         \i /tmp/reporting_schema.sql
         
-```/tmp/create_schema.sql``` - adalah jalan dari langkah 4.
+```/tmp/create_schema.sql``` - is path from step 4.
         
-Anda akan melihat output berikutnya:
+You should see next output:
 
         postgres=# \i /tmp/create_schema.sql
         CREATE DATABASE
@@ -496,100 +498,100 @@ Anda akan melihat output berikutnya:
 
         \q
                
-Sekarang mulai server Anda dan Anda akan melihat teks berikutnya dalam file ```postgres.log```: 
+Now start your server and you should see next text in ```postgres.log``` file : 
 
         2017-03-02 16:17:18.367 - DB url : jdbc:postgresql://localhost:5432/blynk?tcpKeepAlive=true&socketTimeout=150
         2017-03-02 16:17:18.367 - DB user : test
         2017-03-02 16:17:18.367 - Connecting to DB...
         2017-03-02 16:17:18.455 - Connected to database successfully.
         
-PERINGATAN:
-Raw data dapat menggunakan ruang disk Anda dengan sangat cepat!
+WARNING:
+Raw data may consume your disk space very quickly!
 
 ### CSV data format
 
-Format data adalah:
+Data format is:
 
         value,timestamp,deviceId
         
-Contoh:
+For example:
 
         10,1438022081332,0
         
-Dimana ```10``` - adalah nilai pin.
-```1438022081332``` - perbedaannya, diukur dalam milidetik, antara waktu saat ini dan tengah malam, 1 Januari 1970 UTC.
-Untuk menampilkan tanggal / waktu dalam excel Anda dapat menggunakan rumus:
+Where ```10``` - value of pin.
+```1438022081332``` - the difference, measured in milliseconds, between the current time and midnight, January 1, 1970 UTC.
+To display the date/time in excel you may use formula:
 
         =((COLUMN/(60*60*24)/1000+25569))
         
 ```0``` - device id
         
-### Otomatis Mari Enkripsi pembuatan sertifikat
+### Automatic Let's Encrypt certificates generation
 
-Server Blynk terbaru memiliki fitur yang sangat keren - otomatis membuat generasi Enkripsi Enkripsi.
-Namun, ia memiliki beberapa persyaratan:
+Latest Blynk server has super cool feature - automatic Let's Encrypt certificates generation. 
+However, it has few requirements: 
  
-+ Tambah ```server.host``` properti di ```server.properties``` file. 
-Contoh : 
++ Add ```server.host``` property in ```server.properties``` file. 
+For example : 
  
         server.host=myhost.com
 
-IP tidak didukung, ini adalah batasan dari Let's Encrypt. Perlu diingat juga bahwa ```myhost.com```
-harus diselesaikan dengan DNS severs publik.
+IP is not supported, this is the limitation of Let's Encrypt. Also have in mind that ```myhost.com``` 
+should be resolved by public DNS severs.
         
-+ Tambah ```contact.email``` properti di ```server.properties```. contoh : 
++ Add ```contact.email``` property in ```server.properties```. For example : 
  
         contact.email=test@gmail.com
         
-+ Anda perlu memulai server pada port 80 (memerlukan hak root atau admin) atau
-buat [port forwarding](#port-forwarding-for-https-api) menjadi default port HTTP Blynk - 8080.
++ You need to start server on port 80 (requires root or admin rights) or 
+make [port forwarding](#port-forwarding-for-https-api) to default Blynk HTTP port - 8080.
 
-Itu dia! Jalankan server seperti biasa dan sertifikat akan dihasilkan secara otomatis.
+That's it! Run server as regular and certificates will be generated automatically.
 
 ![](https://gifyu.com/images/certs.gif)
 
-### Manual Mari Mengenkripsi Sertifikat SSL / TLS
+### Manual Let's Encrypt SSL/TLS Certificates
 
-+ Pertama instal [certbot](https://github.com/certbot/certbot) di server Anda (mesin tempat Anda menjalankan Blynk Server)
++ First install [certbot](https://github.com/certbot/certbot) on your server (machine where you going to run Blynk Server)
 
         wget https://dl.eff.org/certbot-auto
         chmod a+x certbot-auto
         
-+ Buat dan verifikasi sertifikat (server Anda harus terhubung ke internet dan memiliki port 80/443 terbuka)
++ Generate and verify certificates (your server should be connected to internet and have open 80/443 ports)
 
         ./certbot-auto certonly --agree-tos --email YOUR_EMAIL --standalone -d YOUR_HOST
 
-Contoh 
+For example 
 
         ./certbot-auto certonly --agree-tos --email pupkin@blynk.cc --standalone -d blynk.cc
 
-+ Kemudian tambahkan ke file ```server.properties``` Anda (dalam folder dengan server.jar)
++ Then add to your ```server.properties``` file (in folder with server.jar)
 
         server.ssl.cert=/etc/letsencrypt/live/YOUR_HOST/fullchain.pem
         server.ssl.key=/etc/letsencrypt/live/YOUR_HOST/privkey.pem
         server.ssl.key.pass=
         
-### Hasilkan sertifikat SSL sendiri
+### Generate own SSL certificates
 
-+ Hasilkan sertifikat dan key yang ditandatangani sendiri
++ Generate self-signed certificate and key
 
         openssl req -x509 -nodes -days 1825 -newkey rsa:2048 -keyout server.key -out server.crt
         
-+ Konversikan server.key ke file kunci pribadi PKCS#8 dalam format PEM
++ Convert server.key to PKCS#8 private key file in PEM format
 
         openssl pkcs8 -topk8 -inform PEM -outform PEM -in server.key -out server.pem
         
-Jika Anda menghubungkan perangkat keras dengan [skrip USB](https://github.com/blynkkk/blynk-library/tree/master/scripts) Anda harus memberikan opsi '-s' yang menunjuk ke "nama umum" (nama host) Anda tidak ditentukan selama pembuatan sertifikat.
+If you connect hardware with [USB script](https://github.com/blynkkk/blynk-library/tree/master/scripts) you have to provide an option '-s' pointing to "common name" (hostname) you did specified during certificate generation.
         
-Sebagai output, Anda akan mengambil file server.crt dan server.pem yang perlu Anda berikan untuk properti server.ssl.
+As an output you'll retrieve server.crt and server.pem files that you need to provide for server.ssl properties.
 
-### Instal java untuk Ubuntu
+### Install java for Ubuntu
 
         sudo add-apt-repository ppa:openjdk-r/ppa \
         && sudo apt-get update -q \
         && sudo apt install -y openjdk-11-jdk
         
-atau jika di atas tidak berfungsi:
+or if above doesn't work:
 
         sudo apt-add-repository ppa:webupd8team/java
         sudo apt-get update
@@ -600,67 +602,67 @@ atau jika di atas tidak berfungsi:
         sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
         sudo iptables -t nat -A PREROUTING -p tcp --dport 443 -j REDIRECT --to-port 9443
 
-### Mengaktifkan QR generation di server
+### Enabling QR generation on server
         
         sudo apt-get install libxrender1
 
-### Di belakang router wifi
-Jika Anda ingin menjalankan server Blynk di belakang WiFi-router dan ingin diakses dari Internet, Anda harus menambahkan aturan port-forwarding pada router Anda. Ini diperlukan untuk meneruskan semua permintaan yang datang ke router dalam jaringan lokal ke server Blynk.
+### Behind wifi router
+If you want to run Blynk server behind WiFi-router and want it to be accessible from the Internet, you have to add port-forwarding rule on your router. This is required in order to forward all of the requests that come to the router within the local network to Blynk server.
 
-### Cara membangun
-Blynk memiliki banyak tes integrasi yang membutuhkan DB, jadi Anda harus melewati tes saat membangun.
+### How to build
+Blynk has a bunch of integration tests that require DB, so you have to skip tests during build.
 
         mvn clean install -Dmaven.test.skip=true
         
-### Bagaimana Blynk Bekerja?
-Ketika perangkat keras terhubung ke Blynk cloud, ia membuka koneksi ssl / tls tetap-hidup pada port 443 (9443 untuk server lokal) atau tetap-hidup polos
-koneksi tcp / ip pada port 8080. Aplikasi Blynk membuka koneksi mutual ssl / tls ke Blynk Cloud pada port 443 (9443 untuk server lokal).
-Blynk Cloud bertanggung jawab untuk meneruskan pesan antara perangkat keras dan aplikasi. Dalam koneksi (aplikasi dan perangkat keras) yang digunakan Blynk
-protokol biner sendiri dijelaskan di bawah ini.
+### How Blynk Works?
+When hardware connects to Blynk cloud it opens either keep-alive ssl/tls connection on port 443 (9443 for local servers) or keep-alive plain
+tcp/ip connection on port 8080. Blynk app opens mutual ssl/tls connection to Blynk Cloud on port 443 (9443 for local servers).
+Blynk Cloud is responsible for forwarding messages between hardware and app. In both (app and hardware) connections Blynk uses 
+own binary protocol described below.
 
-### Protokol Blynk
+### Blynk protocol
 
 
-#### Protokol sisi perangkat keras
+#### Hardware side protocol
 
-Blynk mentransfer pesan biner antara server dan perangkat keras dengan struktur berikut:
+Blynk transfers binary messages between the server and the hardware with the following structure:
 
 | Command       | Message Id    | Length/Status   | Body     |
 |:-------------:|:-------------:|:---------------:|:--------:|
 | 1 byte        | 2 bytes       | 2 bytes         | Variable |
 
-Definisi Perintah dan Status: [BlynkProtocolDefs.h](https://github.com/blynkkk/blynk-library/blob/7e942d661bc54ded310bf5d00edee737d0ca44d7/src/Blynk/BlynkProtocolDefs.h)
+Command and Status definitions: [BlynkProtocolDefs.h](https://github.com/blynkkk/blynk-library/blob/7e942d661bc54ded310bf5d00edee737d0ca44d7/src/Blynk/BlynkProtocolDefs.h)
 
 
-#### Protokol sisi aplikasi seluler
+#### Mobile app side protocol
 
-Blynk mentransfer pesan biner antara server dan aplikasi seluler dengan struktur berikut:
+Blynk transfers binary messages between the server and mobile app with the following structure:
 
 | Command       | Message Id    | Length/Status   | Body     |
 |:-------------:|:-------------:|:---------------:|:--------:|
 | 1 byte        | 2 bytes       | 4 bytes         | Variable |
 
 
-#### Protokol sisi websockets
+#### Websockets web side protocol
 
-Blynk mentransfer pesan biner antara server dan soket web (untuk web) dengan struktur berikut:
+Blynk transfers binary messages between the server and websockets (for web) with the following structure:
 
 | Websocket header   | Command       | Message Id    | Body     |
 |:------------------:|:-------------:|:-------------:|:--------:|
 |                    | 1 byte        | 2 bytes       | Variable |
 
 
-Ketika kode perintah == 0, selanjutnya struktur pesan:
+When command code == 0, than message structure is next:
 
 | Websocket header   | Command       | Message Id    | Response code |
 |:------------------:|:-------------:|:-------------:|:-------------:|
 |                    | 1 byte        | 2 bytes       | 4 bytes       |
 
-[Possible response codes](https://github.com/blynkkk/blynk-server/blob/master/server/core/src/main/java/cc/blynk/server/core/protocol/enums/Response.java#L12).
-[Possible command codes](https://github.com/blynkkk/blynk-server/blob/master/server/core/src/main/java/cc/blynk/server/core/protocol/enums/Command.java#L12)
+[Possible response codes](https://github.com/vahnzoel/server-local-blynk/blob/master/server/core/src/main/java/cc/blynk/server/core/protocol/enums/Response.java#L12).
+[Possible command codes](https://github.com/vahnzoel/server-local-blynk/blob/master/server/core/src/main/java/cc/blynk/server/core/protocol/enums/Command.java#L12)
 
-Id dan Panjang Pesan adalah [big endian](http://en.wikipedia.org/wiki/Endianness#Big-endian).
-Body memiliki format khusus-perintah.
+Message Id and Length are [big endian](http://en.wikipedia.org/wiki/Endianness#Big-endian).
+Body has a command-specific format.
 
-## Perizinan
-[GNU GPL license](https://github.com/blynkkk/blynk-server/blob/master/license.txt)
+## Licensing
+[GNU GPL license](https://github.com/vahnzoel/server-local-blynk/blob/master/license.txt)
