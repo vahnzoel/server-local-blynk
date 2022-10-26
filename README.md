@@ -465,7 +465,7 @@ Enable raw data in ```server.properties``` :
 
 #### 3. Download Blynk DB script
 
-        wget https://raw.githubusercontent.com/Peterkn2001vahnzoel/server-local-blynk/master/server/core/src/main/resources/create_schema.sql
+        wget https://raw.githubusercontent.com/vahnzoel/server-local-blynk/master/server/core/src/main/resources/create_schema.sql
         wget https://raw.githubusercontent.com/vahnzoel/server-local-blynk/master/server/core/src/main/resources/reporting_schema.sql
 
 #### 4. Move create_schema.sql and reporting_schema.sql to temp folder (to avoid permission problems)
@@ -649,7 +649,7 @@ Blynk transfers binary messages between the server and the hardware with the fol
 |:-------------:|:-------------:|:---------------:|:--------:|
 | 1 byte        | 2 bytes       | 2 bytes         | Variable |
 
-Command and Status definitions: [BlynkProtocolDefs.h](https://github.com/Peterkn2001/blynk-library/blob/7e942d661bc54ded310bf5d00edee737d0ca44d7/src/Blynk/BlynkProtocolDefs.h)
+Command and Status definitions: [BlynkProtocolDefs.h](https://github.com//blynk-library/blob/7e942d661bc54ded310bf5d00edee737d0ca44d7/src/Blynk/BlynkProtocolDefs.h)
 
 
 #### Mobile app side protocol
