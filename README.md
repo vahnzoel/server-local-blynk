@@ -116,7 +116,7 @@ Go [here](https://www.google.com/settings/security/lesssecureapps) and then clic
         
 + Download Blynk server jar file (or manually copy it to Raspberry Pi via ssh and scp command): 
    
-        wget "https://github.com/vahnzoel/server-local-blynk/releases/download/v0.41.16/server-0.41.16-java8.jar"
+        wget "https://github.com/vahnzoel/server-local-blynk/tree/master/releases/download/v0.41.16/server-0.41.16-java8.jar"
 
 + Run the server on default 'hardware port 8080' and default 'application port 9443' (SSL port)
 
