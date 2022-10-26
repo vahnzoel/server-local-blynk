@@ -1,6 +1,17 @@
 # What is Blynk?
 Blynk is a platform with iOS and Android apps to control Arduino, ESP8266, Raspberry Pi and the likes over the Internet.  
 You can easily build graphic interfaces for all your projects by simply dragging and dropping widgets.
+If you need more information, please follow these links:
+* [Blynk site](https://www.blynk.io)
+* [Blynk docs](http://docs.blynk.cc)
+* [Blynk community](https://community.blynk.cc)
+* [Blynk Examples generator](https://examples.blynk.cc)
+* [Facebook](http://www.fb.com/blynkapp)
+* [Twitter](http://twitter.com/blynk_app)
+* [App Store](https://itunes.apple.com/us/app/blynk-control-arduino-raspberry/id808760481?ls=1&mt=8)
+* [Google Play](https://play.google.com/store/apps/details?id=cc.blynk)
+* [Blynk library](https://github.com/blynkkk/blynk-library)
+* [Kickstarter](https://www.kickstarter.com/projects/167134865/blynk-build-an-app-for-your-arduino-project-in-5-m/description)
 
 ![Dashboard settings](https://github.com/vahnzoel/server-local-blynk/blob/master/docs/overview/dash_settings.png)
 ![Widgets Box](https://github.com/vahnzoel/server-local-blynk/blob/master/docs/overview/widgets_box.png)
@@ -40,9 +51,8 @@ messages between Blynk mobile application and various microcontroller boards and
 
 **Download latest server build [here](https://github.com/vahnzoel/server-local-blynk/releases).**
 
-[![GitHub version](https://img.shields.io/github/release/blynkkk/blynk-server.svg)](https://github.com/vahnzoel/server-local-blynk/releases/latest)
+[![GitHub version](https://img.shields.io/github/release/vahnzoel/server-local-blynk.svg)](https://github.com/vahnzoel/server-local-blynk/releases/latest)
 [![GitHub download](https://img.shields.io/github/downloads/vahnzoel/server-local-blynk/total.svg)](https://github.com/vahnzoel/server-local-blynk/releases/latest)
-[ ![Build Status](https://travis-ci.org/blynkkk/blynk-server.svg?branch=master)](https://travis-ci.org/blynkkk/blynk-server)
 
 ## Requirements
 - Java 8/11 required (OpenJDK, Oracle) 
@@ -63,7 +73,7 @@ For Windows download Java [here](https://www.oracle.com/technetwork/java/javase/
 
 + Run the server on default 'hardware port 8080' and default 'application port 9443' (SSL port)
 
-        java -jar server-0.41.6.jar -dataFolder /path
+        java -jar server-0.41.16.jar -dataFolder /path
         
 That's it! 
 
@@ -97,7 +107,7 @@ Go [here](https://www.google.com/settings/security/lesssecureapps) and then clic
 + Login to Raspberry Pi via ssh;
 + Install java 8: 
         
-        sudo apt-get install oracle-java8-jdk
+        sudo apt install openjdk-8-jdk openjdk-8-jre
         
 + Make sure you are using Java 8
 
@@ -128,6 +138,13 @@ That's it!
 
         docker run -p 8080:8080 -p 9443:9443 mpherg/blynk-server
 
+### Quick Launch on Raspberry Pi
+
++ Install [Docker](https://docs.docker.com/engine/install/debian/)
++ Run Docker container
+
+        docker run -p 8080:8080 -p 9443:9443 linuxkonsult/rasbian-blynk
+
 ### Full customisation
 
 + Check [README](server/Docker) in docker folder
@@ -139,7 +156,7 @@ That's it!
         
 + To enable server auto restart find /etc/rc.local file and add:
 
-        java -jar /home/pi/server-0.41.6-java8.jar -dataFolder /home/pi/Blynk &
+        java -jar /home/pi/server-0.41.16-java8.jar -dataFolder /home/pi/Blynk &
         
 + Or if the approach above doesn't work, execute 
        
@@ -147,7 +164,7 @@ That's it!
 
 add the following line
 
-        @reboot java -jar /home/pi/server-0.41.6-java8.jar -dataFolder /home/pi/Blynk &
+        @reboot java -jar /home/pi/server-0.41.16-java8.jar -dataFolder /home/pi/Blynk &
         
 save and exit.
 
@@ -159,7 +176,7 @@ save and exit.
 
 + Put in it one line: 
 
-        java -jar server-0.41.6.jar -dataFolder /home/pi/Blynk
+        java -jar server-0.41.16.jar -dataFolder /home/pi/Blynk
         
 + Put bat file to windows startup folder
 
@@ -176,7 +193,7 @@ Server should be always updated before you update Blynk App. To update your serv
         
 + You should see something like that
  
-        username   10539  1.0 12.1 3325808 428948 pts/76 Sl   Jan22   9:11 java -jar server-0.41.6.jar   
+        username   10539  1.0 12.1 3325808 428948 pts/76 Sl   Jan22   9:11 java -jar server-0.41.16.jar   
         
 + Kill the old process
 
@@ -275,7 +292,7 @@ do the same with ```mail.properties``` via ```-mailConfig``` and ```sms.properti
  
 For example:
 
-    java -jar server-0.41.6-java8.jar -dataFolder /home/pi/Blynk -serverConfig /home/pi/someFolder/server.properties
+    java -jar server-0.41.16-java8.jar -dataFolder /home/pi/Blynk -serverConfig /home/pi/someFolder/server.properties
 
 Available server options:
 
@@ -296,7 +313,8 @@ Available server options:
         server.ssl.cert=./server_embedded.crt
         server.ssl.key=./server_embedded.pem
         server.ssl.key.pass=pupkin123
-        
+
+**Note**: if you use Let's Encrypt certificates you'll have to add ```#define BLYNK_SSL_USE_LETSENCRYPT``` before ```#include <BlynkSimpleEsp8266_SSL.h>``` in the Arduino Sketch for your hardware.
         
 + User profiles folder. Folder in which all users profiles will be stored. By default System.getProperty("java.io.tmpdir")/blynk used. Will be created if not exists
 
@@ -447,7 +465,7 @@ Enable raw data in ```server.properties``` :
 
 #### 3. Download Blynk DB script
 
-        wget https://raw.githubusercontent.com/vahnzoel/server-local-blynk/master/server/core/src/main/resources/create_schema.sql
+        wget https://raw.githubusercontent.com/Peterkn2001vahnzoel/server-local-blynk/master/server/core/src/main/resources/create_schema.sql
         wget https://raw.githubusercontent.com/vahnzoel/server-local-blynk/master/server/core/src/main/resources/reporting_schema.sql
 
 #### 4. Move create_schema.sql and reporting_schema.sql to temp folder (to avoid permission problems)
@@ -579,7 +597,7 @@ For example
         
 + Convert server.key to PKCS#8 private key file in PEM format
 
-        openssl pkcs8 -topk8 -inform PEM -outform PEM -in server.key -out server.pem
+        openssl pkcs8 -topk8 -v1 PBE-SHA1-2DES -in server.key -out server.enc.key
         
 If you connect hardware with [USB script](https://github.com/blynkkk/blynk-library/tree/master/scripts) you have to provide an option '-s' pointing to "common name" (hostname) you did specified during certificate generation.
         
@@ -631,7 +649,7 @@ Blynk transfers binary messages between the server and the hardware with the fol
 |:-------------:|:-------------:|:---------------:|:--------:|
 | 1 byte        | 2 bytes       | 2 bytes         | Variable |
 
-Command and Status definitions: [BlynkProtocolDefs.h](https://github.com/blynkkk/blynk-library/blob/7e942d661bc54ded310bf5d00edee737d0ca44d7/src/Blynk/BlynkProtocolDefs.h)
+Command and Status definitions: [BlynkProtocolDefs.h](https://github.com/Peterkn2001/blynk-library/blob/7e942d661bc54ded310bf5d00edee737d0ca44d7/src/Blynk/BlynkProtocolDefs.h)
 
 
 #### Mobile app side protocol
