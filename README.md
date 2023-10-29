@@ -49,7 +49,7 @@ If you need more information, please follow these links:
 Blynk Server is an Open-Source [Netty](https://github.com/netty/netty) based Java server, responsible for forwarding 
 messages between Blynk mobile application and various microcontroller boards and SBCs (i.e. Arduino, Raspberry Pi. etc).
 
-**Download latest server build [here](https://github.com/vahnzoel/server-local-blynk/releases).**
+**Download latest server build [here](https://github.com/vahnzoel/server-local-blynk/releases/download).**
 
 [![GitHub version](https://img.shields.io/github/release/vahnzoel/server-local-blynk.svg)](https://github.com/vahnzoel/server-local-blynk/releases/latest)
 [![GitHub download](https://img.shields.io/github/downloads/vahnzoel/server-local-blynk/total.svg)](https://github.com/vahnzoel/server-local-blynk/releases/latest)
